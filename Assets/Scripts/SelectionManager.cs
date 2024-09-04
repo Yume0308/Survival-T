@@ -1,36 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class SelectionManager : MonoBehaviour
 {
-    public GameObject interaction_info_UI;
-    Text interaction_text;
-    // Start is called before the first frame update
-    void Start()
-    {
-        interaction_text = interaction_info_UI.GetComponent<Text>();
-    }
+    public GameObject Interaction_Info_UI;
+    Text interaction_Text;
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
+    {
+        interaction_Text = Interaction_Info_UI.GetComponent<Text>();  
+    }
+    private void Update()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        if(Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit, 100))
         {
             var selectionTransform = hit.transform;
+            if(selectionTransform.GetComponent<InteractableObject>())
+            {
+                interaction_Text.text = selectionTransform.GetComponent<InteractableObject>().GetItemName();
 
-            if (selectionTransform.GetComponent<InteractableObject>() != null)
-            {
-                interaction_text.text = selectionTransform.GetComponent<InteractableObject>().GetItemName();
-                interaction_info_UI.SetActive(true);
+                Interaction_Info_UI.SetActive(true);
             }
-            else
-            {
-                interaction_info_UI.SetActive(false);
-            }
+        }
+        else
+        {
+            Interaction_Info_UI.SetActive(false);
         }
     }
 }

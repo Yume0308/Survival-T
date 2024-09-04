@@ -78,8 +78,6 @@ public class Terrain : MonoBehaviour
                 // Add layer in next slot
                 if (newLayer.stringValue == "")
                 {
-
-                    Debug.Log("Adding New Layer: " + newTag);
                     newLayer.stringValue = newTag;
                     return j;
                 }
